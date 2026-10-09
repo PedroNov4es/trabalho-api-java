@@ -24,4 +24,19 @@ Separação em controllers, services, repositories, modelos de domínio/DTOs e c
 
 ## Documentação
 
-README e OpenAPI são pontos de partida. Completar em exercício: descrição dos endpoints, parâmetros e validações, exemplos de requisição/resposta, códigos de erro e origem dos campos. Referência à licença MIT da API de origem preservada neste projeto.
+A API disponibiliza documentação interativa por meio do Swagger UI e a especificação OpenAPI.
+
+- **Swagger UI:** http://localhost:8080/swagger-ui.html
+- **OpenAPI:** http://localhost:8080/v3/api-docs
+
+Para consultar a documentação, inicie a aplicação com `mvn spring-boot:run` e acesse um dos endereços acima.
+
+### Pontos de atenção
+
+- O README e a documentação OpenAPI são pontos de partida para conhecer a API.
+- A documentação dos endpoints ainda pode ser ampliada com descrições de parâmetros, validações, exemplos de requisições e respostas, códigos de erro e origem dos campos.
+- Os dados de modelos e previsões são fictícios e utilizados como exemplos locais.
+- A API não consulta o RIPE Atlas, não treina nem executa modelos de previsão e não utiliza banco de dados.
+- As classificações e recomendações possuem caráter experimental e não devem ser interpretadas como resultados científicos validados.
+
+A referência à licença MIT da API de origem é preservada neste projeto, conforme registrado em `THIRD_PARTY_NOTICES.md`.
