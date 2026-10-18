@@ -174,13 +174,7 @@ public class CsvForecastRepository implements ForecastRepository {
         if (rtt < 0 || loss < 0) {
             throw new IllegalArgumentException("predicted metrics must be non-negative");
         }
-        String confidenceValue = row.get("model_confidence");
-        Double confidence = confidenceValue == null || confidenceValue.isBlank()
-                ? null
-                : Double.valueOf(confidenceValue);
-        if (confidence != null && (!Double.isFinite(confidence) || confidence < 0 || confidence > 1)) {
-            throw new IllegalArgumentException("model_confidence must be between 0 and 1");
-        }
+        Double confidence = parseOptionalConfidence(row.get("model_confidence"));
         return new Forecast(
                 required(row, "prediction_id"),
                 required(row, "model_id"),
@@ -197,6 +191,22 @@ public class CsvForecastRepository implements ForecastRepository {
                 rtt,
                 loss,
                 confidence);
+    }
+
+    /**
+     * Converte o campo opcional model_confidence.
+     * Ausente ou em branco devolve null; um numero finito em [0,1] e aceito; qualquer outro valor
+     * (fora da faixa, nao numerico ou nao finito) rejeita a linha com IllegalArgumentException.
+     */
+    private static Double parseOptionalConfidence(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        Double confidence = Double.valueOf(value);
+        if (!Double.isFinite(confidence) || confidence < 0 || confidence > 1) {
+            throw new IllegalArgumentException("model_confidence must be between 0 and 1");
+        }
+        return confidence;
     }
 
     private static double parseDouble(Map<String, String> row, String field) {
